@@ -1,7 +1,6 @@
 package space.starylense;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -22,9 +21,24 @@ public class Main {
 
   public static void main(String[] args) {
     parseArgs(args);
+    showSetup(userPassword);
     readFile(path);
     report();
 
+
+  }
+
+  private static void showSetup(String userPassword) {
+    System.out.println("[*] Checking " + path + " for password: " + userPassword);
+    if (caseInsensitiveFlag) {
+      System.out.println("[*] Case Insensitive...");
+    }
+    if (containsPasswordFlag) {
+      System.out.println("[*] Containing Password...");
+    }
+    if (containsDigitsFlag) {
+      System.out.println("[*] Containing Digits...");
+    }
 
   }
 
@@ -60,15 +74,14 @@ public class Main {
 
   private static void readFile(String path) {
     if (path != null) {
-      BufferedReader br = null;
+      BufferedReader br;
       String str;
       try {
         br = new BufferedReader(new FileReader(path));
         while ((str = br.readLine()) != null) {
           process(str);
+
         }
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
       } catch (IOException e) {
         e.printStackTrace();
       }
@@ -96,11 +109,9 @@ public class Main {
     if (caseInsensitiveFlag) {
       if (fileLine.toLowerCase().contentEquals(userPassword.toLowerCase())) {
         matchedPasswordCount++;
-      } else {
-        if (fileLine.contentEquals(userPassword)) {
-          matchedPasswordCount++;
-        }
       }
+      }  else if (fileLine.contentEquals(userPassword)) {
+      matchedPasswordCount++;
     }
   }
 
@@ -130,7 +141,7 @@ public class Main {
   }
 
   private static void report() {
-
+    System.out.println();
     System.out.println("Password matches: " + matchedPasswordCount);
 
     if (containsPasswordFlag) {
