@@ -16,7 +16,7 @@
   @@@@            @@@@@@@@@@@@@@@@@@@@@@@@
   @@@@              @@@@@@@@@@@@@@@@@@@@@
 
-PasswordGlance Word List Scan Tool.
+PassGlance Word List Scan Tool.
 
 A password not showing up in a list doesnt make it a good one!
 
