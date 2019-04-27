@@ -69,11 +69,15 @@ public class PassGlance {
     ) {
       if (arg.matches("-.*")) {
         setOptions(arg);
-      } else if (arg.matches("PATH=.*")) {
+      } else if (arg.matches("path=.*")) {
         path = arg.substring(5);
       } else {
         userPassword = arg;
       }
+    }
+    if (path == null) {
+      System.out.println("Please provide a word list.");
+      System.exit(0);
     }
   }
 
@@ -95,29 +99,31 @@ public class PassGlance {
       case "-v":
         verboseFlag = true;
         break;
+
+      case "-h":
+      case "-help":
+        help();
+        break;
     }
   }
 
+  private static void help() {
+    readFile("src/help.txt");
+  }
+
   private static void readFile(String path) {
-    if (path != null) {
-      BufferedReader br;
-      String str;
-      try {
-        br = new BufferedReader(new FileReader(path));
-        while ((str = br.readLine()) != null) {
-          process(str);
-          if (!bannerFlag) {
-            checkedPasswordsCount++;
-          }
-
+    BufferedReader br;
+    String str;
+    try {
+      br = new BufferedReader(new FileReader(path));
+      while ((str = br.readLine()) != null) {
+        process(str);
+        if (!bannerFlag) {
+          checkedPasswordsCount++;
         }
-      } catch (IOException e) {
-        e.printStackTrace();
-
       }
-    } else {
-      System.out.println("Please provide a word list.");
-      System.exit(0);
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
