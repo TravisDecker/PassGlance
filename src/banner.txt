@@ -6,7 +6,7 @@
   @@@@       @@@@@@&@@@@@@
   @@@@       @@@@@@&@@@
   @@@@       @@@@@&@@@@
-  @@@@     @@@@@@&@@@@      *
+  @@@@     @@@@@@&@@@@        *
   @@@@    @@@@@@ @@@@@
   @@@@@@@@@@@@  @@@@@@
   @@@@@@@       @@@@@@            @@@@@@@@
@@ -16,8 +16,10 @@
   @@@@            @@@@@@@@@@@@@@@@@@@@@@@@
   @@@@              @@@@@@@@@@@@@@@@@@@@@
 
-PasswordGlance, Word List Scan Tool.
+PasswordGlance Word List Scan Tool.
 
-                                                            Travis G. Decker
+A password not showing up in a list doesnt make it a good one!
 
+
+                                                        Travis G. Decker
 *****************************************************************************
