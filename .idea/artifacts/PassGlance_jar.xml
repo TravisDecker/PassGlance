@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PassGlance:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PassGlance_jar</output-path>
+    <root id="archive" name="PassGlance.jar" />
+  </artifact>
+</component>

@@ -1,10 +1,20 @@
-package space.starylense;
+/*bin/mkdir -p /tmp/.java/classes 2> /dev/null
+
+# Compile the program.
+#
+javac -d /tmp/.java/classes $0
+
+# Run the compiled program only if compilation succeeds.
+#
+[[ $? -eq 0 ]] && java -cp /tmp/.java/classes $(basename ${0%.*}) "$@"
+exit
+*/
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Main {
+public class PassGlance {
 
   private static String path;
   private static String userPassword;
@@ -18,7 +28,6 @@ public class Main {
 
   private static int matchedPasswordCount;
   private static int passwordsContainingCount;
-  private static int caseInsensitiveCount;
   private static int containsDigitsCount;
   private static int checkedPasswordsCount;
 
@@ -104,6 +113,7 @@ public class Main {
         }
       } catch (IOException e) {
         e.printStackTrace();
+
       }
     } else {
       System.out.println("Please provide a word list.");
