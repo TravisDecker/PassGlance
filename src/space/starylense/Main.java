@@ -13,13 +13,17 @@ public class Main {
   private static boolean containsPasswordFlag;
   private static boolean containsDigitsFlag;
   private static boolean conatainsSymbolsFlag;
+  private static boolean verboseFlag;
+  private static boolean bannerFlag = true;
 
   private static int matchedPasswordCount;
   private static int passwordsContainingCount;
   private static int caseInsensitiveCount;
   private static int containsDigitsCount;
+  private static int checkedPasswordsCount;
 
   public static void main(String[] args) {
+    startUp();
     parseArgs(args);
     showSetup(userPassword);
     readFile(path);
@@ -28,16 +32,25 @@ public class Main {
 
   }
 
+  private static void startUp() {
+    readFile("src/banner.txt");
+    bannerFlag = false;
+    System.out.println();
+  }
+
   private static void showSetup(String userPassword) {
     System.out.println("[*] Checking " + path + " for password: " + userPassword);
-    if (caseInsensitiveFlag) {
-      System.out.println("[*] Case Insensitive...");
-    }
-    if (containsPasswordFlag) {
-      System.out.println("[*] Containing Password...");
-    }
-    if (containsDigitsFlag) {
-      System.out.println("[*] Containing Digits...");
+
+    if (verboseFlag) {
+      if (caseInsensitiveFlag) {
+        System.out.println("[*] Case Insensitive...");
+      }
+      if (containsPasswordFlag) {
+        System.out.println("[*] Containing Password...");
+      }
+      if (containsDigitsFlag) {
+        System.out.println("[*] Containing Digits...");
+      }
     }
 
   }
@@ -69,6 +82,10 @@ public class Main {
       case "-d":
         containsDigitsFlag = true;
         break;
+
+      case "-v":
+        verboseFlag = true;
+        break;
     }
   }
 
@@ -80,6 +97,9 @@ public class Main {
         br = new BufferedReader(new FileReader(path));
         while ((str = br.readLine()) != null) {
           process(str);
+          if (!bannerFlag) {
+            checkedPasswordsCount++;
+          }
 
         }
       } catch (IOException e) {
@@ -92,17 +112,25 @@ public class Main {
   }
 
   private static void process(String fileLine) {
+    if (bannerFlag) {
+      System.out.println(fileLine);
+      try {
+        Thread.sleep(90);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    } else {
 
-    matchPassword(userPassword, fileLine);
+      matchPassword(userPassword, fileLine);
 
-    if (containsPasswordFlag) {
-      containsPassword(userPassword, fileLine);
+      if (containsPasswordFlag) {
+        containsPassword(userPassword, fileLine);
+      }
+
+      if (containsDigitsFlag) {
+        containsDigits(userPassword, fileLine);
+      }
     }
-
-    if (containsDigitsFlag) {
-      containsDigits(userPassword, fileLine);
-    }
-
   }
 
   private static void matchPassword(String userPassword, String fileLine) {
@@ -110,7 +138,8 @@ public class Main {
       if (fileLine.toLowerCase().contentEquals(userPassword.toLowerCase())) {
         matchedPasswordCount++;
       }
-      }  else if (fileLine.contentEquals(userPassword)) {
+
+    } else if (fileLine.contentEquals(userPassword)) {
       matchedPasswordCount++;
     }
   }
@@ -142,6 +171,7 @@ public class Main {
 
   private static void report() {
     System.out.println();
+    System.out.println("Passwords checked: " + checkedPasswordsCount);
     System.out.println("Password matches: " + matchedPasswordCount);
 
     if (containsPasswordFlag) {
@@ -151,9 +181,5 @@ public class Main {
     if (containsDigitsFlag) {
       System.out.println("Passwords proceeded with/ending with digits: " + containsDigitsCount);
     }
-
-
   }
-
 }
-//testtes
