@@ -18,6 +18,8 @@ public class PassGlance {
 
   private static String path;
   private static String userPassword;
+  private static String DIGITS_REGEX = "\\d+";
+  private static String NANS_REGEX = "\\W+";
 
   private static boolean caseInsensitiveFlag;
   private static boolean containsPasswordFlag;
