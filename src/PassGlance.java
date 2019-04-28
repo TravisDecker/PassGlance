@@ -23,6 +23,7 @@ public class PassGlance {
   private static boolean containsPasswordFlag;
   private static boolean containsDigitsFlag;
   private static boolean conatainsSymbolsFlag;
+  private static boolean SymbolicReplacment;
   private static boolean verboseFlag;
   private static boolean bannerFlag = true;
 
@@ -172,6 +173,7 @@ public class PassGlance {
     }
   }
 
+  //TODO use a place holder for regex to removed hard coded strings and condense methods into one.
   private static void containsDigits(String userPassword, String fileLine) {
     if (caseInsensitiveFlag) {
       if (fileLine.toLowerCase().matches("\\d+" + userPassword) || fileLine.toLowerCase()
@@ -181,6 +183,19 @@ public class PassGlance {
       }
     } else if (fileLine.matches("\\d+" + userPassword) || fileLine.matches(userPassword + "\\d+")
         || fileLine.matches("\\d+" + userPassword + "\\d+")) {
+      containsDigitsCount++;
+    }
+  }
+
+  private static void containsSymbols(String userPassword, String fileLine) {
+    if (caseInsensitiveFlag) {
+      if (fileLine.toLowerCase().matches("\\W+" + userPassword) || fileLine.toLowerCase()
+          .matches(userPassword + "\\W+")
+          || fileLine.toLowerCase().matches("\\W+" + userPassword + "\\W+")) {
+        containsDigitsCount++;
+      }
+    } else if (fileLine.matches("\\W+" + userPassword) || fileLine.matches(userPassword + "\\W+")
+        || fileLine.matches("\\W+" + userPassword + "\\W+")) {
       containsDigitsCount++;
     }
   }
