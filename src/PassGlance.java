@@ -14,6 +14,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * The type Pass glance.
+ */
 public class PassGlance {
 
   private static String path;
@@ -33,6 +36,8 @@ public class PassGlance {
   private static int passwordsContainingCount;
   private static int containsDigitsCount;
   private static int checkedPasswordsCount;
+  private static int containsSymbolsCount;
+
 
   public static void main(String[] args) {
     startUp();
@@ -99,6 +104,9 @@ public class PassGlance {
         containsDigitsFlag = true;
         break;
 
+      case "-s":
+        conatainsSymbolsFlag = true;
+        break;
       case "-v":
         verboseFlag = true;
         break;
@@ -147,7 +155,10 @@ public class PassGlance {
       }
 
       if (containsDigitsFlag) {
-        containsDigits(userPassword, fileLine);
+        leadingTrailingVals(userPassword, fileLine, DIGITS_REGEX);
+      }
+      if (conatainsSymbolsFlag) {
+        leadingTrailingVals(userPassword, fileLine, NANS_REGEX);
       }
     }
   }
@@ -176,30 +187,26 @@ public class PassGlance {
   }
 
   //TODO use a place holder for regex to removed hard coded strings and condense methods into one.
-  private static void containsDigits(String userPassword, String fileLine) {
+  private static void leadingTrailingVals(String userPassword, String fileLine, String option) {
+    int count = 0;
     if (caseInsensitiveFlag) {
-      if (fileLine.toLowerCase().matches("\\d+" + userPassword) || fileLine.toLowerCase()
-          .matches(userPassword + "\\d+")
-          || fileLine.toLowerCase().matches("\\d+" + userPassword + "\\d+")) {
-        containsDigitsCount++;
+      if (fileLine.toLowerCase().matches(option + userPassword) || fileLine.toLowerCase()
+          .matches(userPassword + option)
+          || fileLine.toLowerCase().matches(option + userPassword + option)) {
+        count++;
       }
-    } else if (fileLine.matches("\\d+" + userPassword) || fileLine.matches(userPassword + "\\d+")
-        || fileLine.matches("\\d+" + userPassword + "\\d+")) {
-      containsDigitsCount++;
+    } else if (fileLine.matches(option + userPassword) || fileLine.matches(userPassword + option)
+        || fileLine.matches(option + userPassword + option)) {
+      count++;
     }
-  }
+    if (option == NANS_REGEX) {
+      containsSymbolsCount += count;
+      count = 0;
+    } else {
+      containsDigitsCount += count;
+      count = 0;
+    }
 
-  private static void containsSymbols(String userPassword, String fileLine) {
-    if (caseInsensitiveFlag) {
-      if (fileLine.toLowerCase().matches("\\W+" + userPassword) || fileLine.toLowerCase()
-          .matches(userPassword + "\\W+")
-          || fileLine.toLowerCase().matches("\\W+" + userPassword + "\\W+")) {
-        containsDigitsCount++;
-      }
-    } else if (fileLine.matches("\\W+" + userPassword) || fileLine.matches(userPassword + "\\W+")
-        || fileLine.matches("\\W+" + userPassword + "\\W+")) {
-      containsDigitsCount++;
-    }
   }
 
   private static void report() {
@@ -213,6 +220,10 @@ public class PassGlance {
 
     if (containsDigitsFlag) {
       System.out.println("Passwords proceeded with/ending with digits: " + containsDigitsCount);
+    }
+
+    if (conatainsSymbolsFlag) {
+      System.out.println("Passwords proceeded with/ending with symbols: " + containsSymbolsCount);
     }
   }
 }
