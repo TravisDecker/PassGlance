@@ -14,9 +14,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- * The type Pass glance.
- */
 public class PassGlance {
 
   private static String path;
@@ -30,7 +27,7 @@ public class PassGlance {
   private static boolean conatainsSymbolsFlag;
   private static boolean SymbolicReplacment;
   private static boolean verboseFlag;
-  private static boolean bannerFlag = true;
+  private static boolean nonListFileFlag = true;
 
   private static int matchedPasswordCount;
   private static int passwordsContainingCount;
@@ -51,10 +48,11 @@ public class PassGlance {
 
   private static void startUp() {
     readFile("src/banner.txt");
-    bannerFlag = false;
+    nonListFileFlag = false;
     System.out.println();
   }
 
+  //TODO pull string literals into a file
   private static void showSetup(String userPassword) {
     System.out.println("[*] Checking " + path + " for password: " + userPassword);
 
@@ -72,6 +70,7 @@ public class PassGlance {
 
   }
 
+  // TODo handle null password
   private static void parseArgs(String[] args) {
     for (String arg : args
     ) {
@@ -85,6 +84,8 @@ public class PassGlance {
     }
     if (path == null) {
       System.out.println("Please provide a word list.");
+      nonListFileFlag = true;
+      help();
       System.exit(0);
     }
   }
@@ -107,18 +108,16 @@ public class PassGlance {
       case "-s":
         conatainsSymbolsFlag = true;
         break;
+
       case "-v":
         verboseFlag = true;
         break;
-
-      case "-h":
-      case "-help":
-        help();
-        break;
+      z
     }
   }
 
   private static void help() {
+    nonListFileFlag = true;
     readFile("src/help.txt");
   }
 
@@ -129,7 +128,7 @@ public class PassGlance {
       br = new BufferedReader(new FileReader(path));
       while ((str = br.readLine()) != null) {
         process(str);
-        if (!bannerFlag) {
+        if (!nonListFileFlag) {
           checkedPasswordsCount++;
         }
       }
@@ -139,7 +138,7 @@ public class PassGlance {
   }
 
   private static void process(String fileLine) {
-    if (bannerFlag) {
+    if (nonListFileFlag) {
       System.out.println(fileLine);
       try {
         Thread.sleep(90);
@@ -186,7 +185,6 @@ public class PassGlance {
     }
   }
 
-  //TODO use a place holder for regex to removed hard coded strings and condense methods into one.
   private static void leadingTrailingVals(String userPassword, String fileLine, String option) {
     int count = 0;
     if (caseInsensitiveFlag) {
@@ -209,6 +207,7 @@ public class PassGlance {
 
   }
 
+  //TODO pull string literals into a file
   private static void report() {
     System.out.println();
     System.out.println("Passwords checked: " + checkedPasswordsCount);
