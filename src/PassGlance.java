@@ -112,7 +112,7 @@ public class PassGlance {
       case "-v":
         verboseFlag = true;
         break;
-      z
+
     }
   }
 
