@@ -24,7 +24,7 @@ public class PassGlance {
   private static boolean caseInsensitiveFlag;
   private static boolean containsPasswordFlag;
   private static boolean containsDigitsFlag;
-  private static boolean conatainsSymbolsFlag;
+  private static boolean containsSymbolsFlag;
   private static boolean SymbolicReplacment;
   private static boolean verboseFlag;
   private static boolean nonListFileFlag = true;
@@ -70,7 +70,7 @@ public class PassGlance {
 
   }
 
-  // TODo handle null password
+  // TODO handle null password
   private static void parseArgs(String[] args) {
     for (String arg : args
     ) {
@@ -106,7 +106,7 @@ public class PassGlance {
         break;
 
       case "-s":
-        conatainsSymbolsFlag = true;
+        containsSymbolsFlag = true;
         break;
 
       case "-v":
@@ -154,7 +154,7 @@ public class PassGlance {
       if (containsDigitsFlag) {
         leadingTrailingVals(userPassword, fileLine, DIGITS_REGEX);
       }
-      if (conatainsSymbolsFlag) {
+      if (containsSymbolsFlag) {
         leadingTrailingVals(userPassword, fileLine, NANS_REGEX);
       }
     }
@@ -184,7 +184,7 @@ public class PassGlance {
   }
 
   private static void leadingTrailingVals(String userPassword, String fileLine, String option) {
-    int count = 0;
+    var count = 0;
     if (caseInsensitiveFlag) {
       if (fileLine.toLowerCase().matches(option + userPassword) || fileLine.toLowerCase()
           .matches(userPassword + option)
@@ -219,7 +219,7 @@ public class PassGlance {
       System.out.println("Passwords proceeded with/ending with digits: " + containsDigitsCount);
     }
 
-    if (conatainsSymbolsFlag) {
+    if (containsSymbolsFlag) {
       System.out.println("Passwords proceeded with/ending with symbols: " + containsSymbolsCount);
     }
   }
