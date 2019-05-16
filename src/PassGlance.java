@@ -122,10 +122,8 @@ public class PassGlance {
   }
 
   private static void readFile(String path) {
-    BufferedReader br;
     String str;
-    try {
-      br = new BufferedReader(new FileReader(path));
+    try (BufferedReader br = new BufferedReader(new FileReader(path))) {
       while ((str = br.readLine()) != null) {
         process(str);
         if (!nonListFileFlag) {
