@@ -19,5 +19,33 @@ Then start the program using the bash command:
 bash /where_you_cloned_the_repo/PassGlance/src/PassGlance.java [options] path=/path/to/word/list [password]
 ````
 
+# Options
 
+````
+-cI Case Insensitive 
+````
+Checks Passwords Insenstivce to casing
+````
+-c Contains Password
+````
+Checks for passwords that contain the given word.
+````
+-d With Digits
+````
+Checks passwords with proceeding and/or trailing digits.
+````
+-s With Symbols
+````
+Checks passwords with proceeding and/or trailing symbols.
+````
+-v Verbose output
+````
+Outputs more information.
+
+
+# Example Usage
+
+```` 
+bash /Tools/PassGlance/src/PassGlance.java -cI -d -v path=/Desktop/rockyou.txt
+```
 
