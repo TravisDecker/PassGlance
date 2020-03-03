@@ -47,5 +47,5 @@ Outputs more information.
 
 ```` 
 bash /Tools/PassGlance/src/PassGlance.java -cI -d -v path=/Desktop/rockyou.txt
-```
+````
 
